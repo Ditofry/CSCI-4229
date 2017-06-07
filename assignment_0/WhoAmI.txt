@@ -1,0 +1,22 @@
+1) Brandon Barrett
+
+2) BA Computer Science, BA Philosohpy
+
+3) Mostly 15" 2015 Macbook Pro, also Windows 10 desktop w/NVIDIA 700 series as well and Mint Linux on that same PC
+
+4) Some work with highly abstracted libraries such as three.js throughout the course of my time as a web developer.
+
+5) Interests vary greatly. The top ones (right now) in no partiular order are: 
+  games 
+  data visualization with an emphases on VR hardware
+  music visualizers 
+  work (data visualization) 
+  my very own screen saver
+
+6) Ideas for project:
+  Infinite Staircase (not sure how viable this idea is)
+  Basic music visualizer
+  Interactive model/visualization of data that hasn't been visualized yet
+  Cool mutating Screen Saver(s?)
+  Any sort of game, but 1 month is a little tight for learning openGL and building a game with it while I also have a job and a kiddo.
+  
