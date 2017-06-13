@@ -23,6 +23,7 @@ void display() {
    
    //  Make scene visible
    glFlush();
+   glutSwapBuffers();
 }
 
 /*

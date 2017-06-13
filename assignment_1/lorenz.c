@@ -1,8 +1,3 @@
-/*
- * Simple program to demonstrate generating coordinates
- * using the Lorenz Attractor
- */
-
 #include <stdio.h>
 
 /*  Lorenz Parameters  */

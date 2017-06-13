@@ -141,7 +141,7 @@ int main(int argc,char* argv[])
    //  Register display, reshape, idle and key callbacks
    glutDisplayFunc(display);
    glutReshapeFunc(reshape);
-   glutIdleFunc(idle);
+  //  glutIdleFunc(idle);
    glutSpecialFunc(special);
    //  Enable Z-buffer depth test
    glEnable(GL_DEPTH_TEST);

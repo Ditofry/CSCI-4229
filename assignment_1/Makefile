@@ -1,5 +1,5 @@
 # file1 file2 etc
-EX=boilerPlate
+EX=main 
 all: $(EX)
 
 # Main target
