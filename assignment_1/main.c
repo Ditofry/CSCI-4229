@@ -130,7 +130,7 @@ void display() {
     }
 
     glColor3f(red, green, blue);
-    glVertex3d(x/50, y/50, z/50);
+    glVertex4d(x, y, z, 50); // TODO: scale with constants?
   }
   glEnd();
 

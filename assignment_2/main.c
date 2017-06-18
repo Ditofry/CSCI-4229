@@ -92,7 +92,6 @@ void idle() {
   glutPostRedisplay();
 }
 
-// TODO: look at breaking things out into more functions and inline functions
 void display() {
   //  Clear screen
   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -112,42 +111,22 @@ void display() {
   glRotatef(zh,0.0,0.0,1.0);
   
   glBegin(GL_LINE_STRIP);
-  for (int i=0; i < 50000; i++) {
-    double dx = s*(y-x);
-    double dy = x*(r-z)-y;
-    double dz = x*y - b*z;
-
-    x += dt*dx;
-    y += dt*dy;
-    z += dt*dz;
-
-    if (i < 20000) {
-      red += 0.00005;
-    } else if (i < 40000) {
-      green += 0.00005;
-    } else {
-      blue += 0.0001;
-    }
-
-    glColor3f(red, green, blue);
-    glVertex3d(x/50, y/50, z/50);
-  }
   glEnd();
 
   glColor3f(1,1,1);
   
   // Print actions key for user
   glWindowPos2i(15,60);
-  Print("system for constants:");
+  Print("text in the corner");
 
   glWindowPos2i(15,40);
-  Print("s=%.1f (change with left/right)", s);
+  Print("some instructions");
   
   glWindowPos2i(15,20);
-  Print("r=%.1f (change with up/down)", r);
+  Print("more stuff", r);
   
   glWindowPos2i(15,0);
-  Print("b=%.1f", b);
+  Print("last of the stuff", b);
   
   //  Make scene visible
   glFlush();
@@ -161,7 +140,7 @@ int main(int argc,char* argv[]) {
   glutInitWindowSize(800, 800);
 
   //  Create window
-  glutCreateWindow("RalphLorenz Attractor");
+  glutCreateWindow("Mean Scene Machine");
 
   // Display functions
   glutDisplayFunc(display);
