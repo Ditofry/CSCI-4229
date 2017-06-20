@@ -24,10 +24,7 @@ double zh = 0;  //  Spin angle
 double cameraRotationX = 0;
 double cameraRotationY = 0;
 
-/*
- *  TODO: this is not mine... it's a placeholder
- */
- //  Cosine and Sine in degrees
+ //  Cosine and Sine in degrees from prof's code
  #define Cos(x) (cos((x)*3.1415927/180))
  #define Sin(x) (sin((x)*3.1415927/180))
 
@@ -46,55 +43,55 @@ static void imperfectShard(double x, double y, double z, double th) {
   // Top
   glColor3f(0,0,1);
   glVertex4d(0.0, 0.0, 8.0, 50); // TODO: glScaled instead
-  glVertex4d( 1.0, 1.5, 0.0, 50);
-  glVertex4d( 2.0,  0.5, 0.0, 50);
+  glVertex4d(1.0, 1.5, 0.0, 50);
+  glVertex4d(2.0,  0.5, 0.0, 50);
   
   glColor3f(0,0.2,1);
   glVertex4d(0.0,  0.0, 8.0, 50);
-  glVertex4d( 2.0,  0.5, 0.0, 50);
-  glVertex4d( 0.9, -1.5, 0.0, 50);
+  glVertex4d(2.0,  0.5, 0.0, 50);
+  glVertex4d(0.9, -1.5, 0.0, 50);
 
   glColor3f(0.1,1,0.1);
   glVertex4d(0.0,  0.0, 8.0, 50);
-  glVertex4d( 0.9, -1.5, 0.0, 50);
-  glVertex4d( -1.0, -1.8, 0.0, 50);
+  glVertex4d(0.9, -1.5, 0.0, 50);
+  glVertex4d(-1.0, -1.8, 0.0, 50);
   
   glColor3f(0.334,1,0);
   glVertex4d(0.0,  0.0, 8.0, 50);
-  glVertex4d( -1.0, -1.8, 0.0, 50);
-  glVertex4d( -2.0,  1.2, 3.0, 50);
+  glVertex4d(-1.0, -1.8, 0.0, 50);
+  glVertex4d(-2.0,  1.2, 3.0, 50);
   
   glColor3f(0.2,0,0.21);
   glVertex4d(0.0,  0.0, 8.0, 50);
-  glVertex4d( -2.0,  1.2, 3.0, 50);
-  glVertex4d( 1.0, 1.5, 0.0, 50);
+  glVertex4d(-2.0,  1.2, 3.0, 50);
+  glVertex4d(1.0, 1.5, 0.0, 50);
 
   
   // Bottom
   glColor3f(0.4,0,1);
   glVertex4d(0.0, 0.0, -8.0, 50);
-  glVertex4d( 1.0, 1.5, 0.0, 50);
-  glVertex4d( 2.0,  0.5, 0.0, 50);
+  glVertex4d(1.0, 1.5, 0.0, 50);
+  glVertex4d(2.0,  0.5, 0.0, 50);
   
   glColor3f(0,0.2,1);
   glVertex4d(0.0,  0.0, -8.0, 50);
-  glVertex4d( 2.0,  0.5, 0.0, 50);
-  glVertex4d( 0.9, -1.5, 0.0, 50);
+  glVertex4d(2.0,  0.5, 0.0, 50);
+  glVertex4d(0.9, -1.5, 0.0, 50);
 
   glColor3f(0.8,0.3,0.1);
   glVertex4d(0.0,  0.0, -8.0, 50);
-  glVertex4d( 0.9, -1.5, 0.0, 50);
-  glVertex4d( -1.0, -1.8, 0.0, 50);
+  glVertex4d(0.9, -1.5, 0.0, 50);
+  glVertex4d(-1.0, -1.8, 0.0, 50);
   
   glColor3f(0,1,0);
   glVertex4d(0.0,  0.0, -8.0, 50);
-  glVertex4d( -1.0, -1.8, 0.0, 50);
-  glVertex4d( -2.0,  1.2, 3.0, 50);
+  glVertex4d(-1.0, -1.8, 0.0, 50);
+  glVertex4d(-2.0,  1.2, 3.0, 50);
   
   glColor3f(0.2,0.3,0);
   glVertex4d(0.0,  0.0, -8.0, 50);
-  glVertex4d( -2.0,  1.2, 3.0, 50);
-  glVertex4d( 1.0, 1.5, 0.0, 50);
+  glVertex4d(-2.0,  1.2, 3.0, 50);
+  glVertex4d(1.0, 1.5, 0.0, 50);
   
   glEnd();
 
@@ -106,46 +103,46 @@ static void menacingTower(double x, double y, double z, double scale, double rot
   
   glTranslated(x, y, z);
   glScaled(scale, scale, scale);
-  glRotatef(rotation, 0, 0, 1);
+  // glRotatef(rotation, 0, 0, 1);
 
   // Base
   glBegin(GL_QUADS);  
   //  Front
-  glColor3f(1,0,0);
-  glVertex3f(-1, -1, 1);
-  glVertex3f(+1, -1, 1);
-  glVertex3f(+1, +1, 1);
-  glVertex3f(-1, +1, 1);
+  glColor3f(1, 0, 0);
+  glVertex3f(-1, -9, 1);
+  glVertex3f(+1, -9, 1);
+  glVertex3f(+1, +9, 1);
+  glVertex3f(-1, +9, 1);
   //  Back
-  glColor3f(0,0,1);
-  glVertex3f(+1, -1, -1);
-  glVertex3f(-1, -1, -1);
-  glVertex3f(-1, +1, -1);
-  glVertex3f(+1, +1, -1);
+  glColor3f(0, 0, 1);
+  glVertex3f(+1, -9, -1);
+  glVertex3f(-1, -9, -1);
+  glVertex3f(-1, +9, -1);
+  glVertex3f(+1, +9, -1);
   //  Right
-  glColor3f(1,1,0);
-  glVertex3f(+1, -1, +1);
-  glVertex3f(+1, -1, -1);
-  glVertex3f(+1, +1, -1);
-  glVertex3f(+1, +1, +1);
+  glColor3f(1, 1, 0);
+  glVertex3f(+1, -9, +1);
+  glVertex3f(+1, -9, -1);
+  glVertex3f(+1, +9, -1);
+  glVertex3f(+1, +9, +1);
   //  Left
-  glColor3f(0,1,0);
-  glVertex3f(-1, -1, -1);
-  glVertex3f(-1, -1, +1);
-  glVertex3f(-1, +1, +1);
-  glVertex3f(-1, +1, -1);
+  glColor3f(0, 1, 0);
+  glVertex3f(-1, -9, -1);
+  glVertex3f(-1, -9, +1);
+  glVertex3f(-1, +9, +1);
+  glVertex3f(-1, +9, -1);
   //  Top
-  glColor3f(0,1,1);
-  glVertex3f(-1, +1, +1);
-  glVertex3f(+1, +1, +1);
-  glVertex3f(+1, +1, -1);
-  glVertex3f(-1, +1, -1);
+  glColor3f(0, 1, 1);
+  glVertex3f(-1, +9, +1);
+  glVertex3f(+1, +9, +1);
+  glVertex3f(+1, +9, -1);
+  glVertex3f(-1, +9, -1);
   //  Bottom
-  glColor3f(1,0,1);
-  glVertex3f(-1, -1, -1);
-  glVertex3f(+1, -1, -1);
-  glVertex3f(+1, -1, +1);
-  glVertex3f(-1, -1, +1);
+  glColor3f(1, 0, 1);
+  glVertex3f(-1, -9, -1);
+  glVertex3f(+1, -9, -1);
+  glVertex3f(+1, -9, +1);
+  glVertex3f(-1, -9, +1);
   
   // Capstone
   
@@ -240,7 +237,7 @@ void display() {
   
   // just doing this for now.... will loop later
   imperfectShard(0, 0.7, 0, th);
-  menacingTower(0, 0, 0, .1, th);
+  menacingTower(0, 0, 0, .05, th);
 
   
   // Print actions key for user
@@ -263,7 +260,7 @@ void display() {
 
 int main(int argc,char* argv[]) {
   //  Setup
-  glutInit(&argc,argv);
+  glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
   glutInitWindowSize(800, 800);
 
