@@ -20,13 +20,38 @@ double r = 28;
 
 double th = 0;  //  Rotation angle
 double zh = 0;  //  Spin angle
+int ph = 0;         //  Elevation of view angle
+int mode = 0;       //  Projection mode 
+double asp = 1;     //  Aspect ratio
+double dim = 2.0;   //  Size of world
+int fov = 55;       //  Field of view (for perspective)
 
 double cameraRotationX = 0;
 double cameraRotationY = 0;
 
- //  Cosine and Sine in degrees from prof's code
- #define Cos(x) (cos((x)*3.1415927/180))
- #define Sin(x) (sin((x)*3.1415927/180))
+//  Cosine and Sine in degrees from prof's code
+#define Cos(x) (cos((x)*3.1415927/180))
+#define Sin(x) (sin((x)*3.1415927/180))
+
+/*
+ *  Set projection
+ */
+static void Project() {
+   //  Tell OpenGL we want to manipulate the projection matrix
+   glMatrixMode(GL_PROJECTION);
+   //  Undo previous transformations
+   glLoadIdentity();
+   //  Perspective transformation
+   if (mode)
+      gluPerspective(fov,asp,dim/4,4*dim);
+   //  Orthogonal projection
+   else
+      glOrtho(-asp*dim,+asp*dim, -dim,+dim, -dim,+dim);
+   //  Switch to manipulating the model matrix
+   glMatrixMode(GL_MODELVIEW);
+   //  Undo previous transformations
+   glLoadIdentity();
+}
 
 static void imperfectShard(double x, double y, double z, double th) {
   //  Save transformation
@@ -103,7 +128,6 @@ static void menacingTower(double x, double y, double z, double scale, double rot
   
   glTranslated(x, y, z);
   glScaled(scale, scale, scale);
-  // glRotatef(rotation, 0, 0, 1);
 
   // Base
   glBegin(GL_QUADS);  
@@ -171,9 +195,6 @@ void Print(const char* format , ...) {
   }
 }
 
-/*
- * This function is called by GLUT when special keys are pressed
- */
 void special(int key, int x, int y) {
   //  Right arrow - increase rotation by 5 degree
   if (key == GLUT_KEY_RIGHT) {
@@ -188,8 +209,35 @@ void special(int key, int x, int y) {
   } else if (key == GLUT_KEY_DOWN) {
     cameraRotationX -= 10;
   }
-
+  
+  //  PageUp key - increase dim
+  if (key == GLUT_KEY_PAGE_UP) {
+    dim += 0.1;
+  } else if (key == GLUT_KEY_PAGE_DOWN && dim>1) {
+    dim -= 0.1;
+  }
+  
+  Project();
   glutPostRedisplay();
+}
+
+void key(unsigned char ch, int x, int y) {
+  //  Exit on ESC
+  if (ch == 27) {
+    exit(0);
+  } else if (ch == '0') {
+    cameraRotationX = cameraRotationY = 0;
+  } else if (ch == 'm' || ch == 'M') {
+    mode = 1 - mode;
+  } else if (ch == '-' && ch>1) {
+    fov--;
+  } else if (ch == '+' && ch<179) {
+    fov++;
+  }
+   //  Reproject
+   Project();
+   //  Tell GLUT it is necessary to redisplay the scene
+   glutPostRedisplay();
 }
 
 /*
@@ -197,19 +245,26 @@ void special(int key, int x, int y) {
  */
 void reshape(int width,int height) {
   //  Calculate width to height ratio
-  double w2h = (height>0) ? (double)width/height : 1;
-  //  Set viewport as entire window
+  // double w2h = (height>0) ? (double)width/height : 1;
+  // //  Set viewport as entire window
+  // glViewport(0,0, width,height);
+  // //  Select projection matrix
+  // glMatrixMode(GL_PROJECTION);
+  // //  Set projection to identity
+  // glLoadIdentity();
+  // //  Orthogonal projection:  unit cube adjusted for aspect ratio
+  // glOrtho(-w2h,+w2h, -1.0,+1.0, -1.0,+1.0);
+  // //  Select model view matrix
+  // glMatrixMode(GL_MODELVIEW);
+  // //  Set model view to identity
+  // glLoadIdentity();
+
+  //  Ratio of the width to the height of the window
+  asp = (height>0) ? (double)width/height : 1;
+  //  Set the viewport to the entire window
   glViewport(0,0, width,height);
-  //  Select projection matrix
-  glMatrixMode(GL_PROJECTION);
-  //  Set projection to identity
-  glLoadIdentity();
-  //  Orthogonal projection:  unit cube adjusted for aspect ratio
-  glOrtho(-w2h,+w2h, -1.0,+1.0, -1.0,+1.0);
-  //  Select model view matrix
-  glMatrixMode(GL_MODELVIEW);
-  //  Set model view to identity
-  glLoadIdentity();
+  //  Set projection
+  Project();
 }
 
 /*
@@ -231,9 +286,18 @@ void display() {
   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
   //  Reset transformations
   glLoadIdentity();
-
-  glRotatef(cameraRotationX, 1, 0, 0);
-  glRotatef(cameraRotationY, 0, 1, 0);
+  
+  if (mode) {
+     double Ex = -2*dim*Sin(cameraRotationY)*Cos(cameraRotationX);
+     double Ey = +2*dim        *Sin(cameraRotationX);
+     double Ez = +2*dim*Cos(cameraRotationY)*Cos(cameraRotationX); //ph === y?
+     gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,Cos(cameraRotationX),0);
+  } else {
+    //  glRotatef(ph,1,0,0);
+    //  glRotatef(th,0,1,0);
+     glRotatef(cameraRotationX, 1, 0, 0);
+     glRotatef(cameraRotationY, 0, 1, 0);
+  }
   
   // just doing this for now.... will loop later
   imperfectShard(0, 0.7, 0, th);
@@ -274,6 +338,7 @@ int main(int argc,char* argv[]) {
 
   // Callbacks
   glutSpecialFunc(special);
+  glutKeyboardFunc(key);
 
   // TODO: I haven't fully groked the implications of this yet.
   glEnable(GL_DEPTH_TEST);
