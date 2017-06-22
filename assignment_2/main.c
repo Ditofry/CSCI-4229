@@ -25,9 +25,14 @@ int mode = 0;       //  Projection mode
 double asp = 1;     //  Aspect ratio
 double dim = 2.0;   //  Size of world
 int fov = 55;       //  Field of view (for perspective)
+double xpos = 0;
+double ypos = 0;
+double lookAngle = 0;
 
 double cameraRotationX = 0;
 double cameraRotationY = 0;
+
+const char *viewModes[] = {"orthogonal","perspective","first-person"};
 
 //  Cosine and Sine in degrees from prof's code
 #define Cos(x) (cos((x)*3.1415927/180))
@@ -228,7 +233,7 @@ void key(unsigned char ch, int x, int y) {
   } else if (ch == '0') {
     cameraRotationX = cameraRotationY = 0;
   } else if (ch == 'm' || ch == 'M') {
-    mode = 1 - mode;
+    mode = (mode + 1) % 3;
   } else if (ch == '-' && ch>1) {
     fov--;
   } else if (ch == '+' && ch<179) {
@@ -244,21 +249,6 @@ void key(unsigned char ch, int x, int y) {
  * This function is called by GLUT when the window is resized
  */
 void reshape(int width,int height) {
-  //  Calculate width to height ratio
-  // double w2h = (height>0) ? (double)width/height : 1;
-  // //  Set viewport as entire window
-  // glViewport(0,0, width,height);
-  // //  Select projection matrix
-  // glMatrixMode(GL_PROJECTION);
-  // //  Set projection to identity
-  // glLoadIdentity();
-  // //  Orthogonal projection:  unit cube adjusted for aspect ratio
-  // glOrtho(-w2h,+w2h, -1.0,+1.0, -1.0,+1.0);
-  // //  Select model view matrix
-  // glMatrixMode(GL_MODELVIEW);
-  // //  Set model view to identity
-  // glLoadIdentity();
-
   //  Ratio of the width to the height of the window
   asp = (height>0) ? (double)width/height : 1;
   //  Set the viewport to the entire window
@@ -283,7 +273,7 @@ void idle() {
 
 void display() {
   //  Clear screen
-  glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   //  Reset transformations
   glLoadIdentity();
   
@@ -291,7 +281,7 @@ void display() {
      double Ex = -2*dim*Sin(cameraRotationY)*Cos(cameraRotationX);
      double Ey = +2*dim        *Sin(cameraRotationX);
      double Ez = +2*dim*Cos(cameraRotationY)*Cos(cameraRotationX); //ph === y?
-     gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,Cos(cameraRotationX),0);
+     gluLookAt(Ex,Ey,Ez, 0,0,0, 0,Cos(cameraRotationX),0);
   } else {
     //  glRotatef(ph,1,0,0);
     //  glRotatef(th,0,1,0);
@@ -306,16 +296,16 @@ void display() {
   
   // Print actions key for user
   glWindowPos2i(15,60);
-  Print("text in the corner");
+  Print("mode: %s", viewModes[mode]);
 
-  glWindowPos2i(15,40);
-  Print("some instructions");
-  
-  glWindowPos2i(15,20);
-  Print("more stuff", r);
-  
-  glWindowPos2i(15,0);
-  Print("last of the stuff", b);
+  // glWindowPos2i(15,40);
+  // Print("some instructions");
+  // 
+  // glWindowPos2i(15,20);
+  // Print("more stuff", r);
+  // 
+  // glWindowPos2i(15,0);
+  // Print("last of the stuff", b);
   
   //  Make scene visible
   glFlush();
